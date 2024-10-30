@@ -28,17 +28,17 @@ module.exports = {
 
     login: async (req, res, next)=>{
         try{
-            const result = await authSchema.ValidateAsync(req.body);
+            const result = await authSchema.validateAsync(req.body);
             const user = await User.findOne({email: result.email});
-            if(!user)  throw creatError.NotFound('user not registered');
+            if (!user)  throw creatError.NotFound('user not registered');
 
             const isMatch = await user.isValidPassword(result.password);
             if(!isMatch) throw creatError.Unauthorized('username/password is not valid');
         
             const accessToken = await signAccessToken(user.id);
-            // const refreshToken = await signRefreshToken(user.id);
-            // re.send(result);
-        res.send( {accessToken});
+        
+            res.send( {accessToken});
+
             }catch(error){
                 if(error.isJoi === true) return next(creatError.BadRequest('Invalid username/password'));
                 next(error);

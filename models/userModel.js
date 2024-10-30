@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bycrypt = require('bcrypt');
  const userSchema = new Schema({
     email: {
         type: String,
@@ -31,6 +32,6 @@ const Schema = mongoose.Schema;
         throw error;
     }
   }
- const user = mongoose.model('user', userSchema);
+ const User = mongoose.model('User', userSchema);
   // create a model that is going to represent our collection in the db
- module.exports = user;
+ module.exports = User;
